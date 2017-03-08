@@ -1,3 +1,4 @@
+/* jshint node:true,esversion:6 */
 'use strict';
 
 import plugins  from 'gulp-load-plugins';
@@ -16,7 +17,7 @@ const $ = plugins();
 // Check for --production flag
 const PRODUCTION = !!(yargs.argv.production);
 
-// Load settings from settings.yml
+// Load settings from config.yml
 const { COMPATIBILITY, PORT, UNCSS_OPTIONS, PATHS } = loadConfig();
 
 function loadConfig() {
@@ -119,7 +120,8 @@ function images() {
 // Start a server with BrowserSync to preview the site in
 function server(done) {
   browser.init({
-    server: PATHS.dist, port: PORT
+    server: PATHS.dist, port: PORT,
+    online: false
   });
   done();
 }
