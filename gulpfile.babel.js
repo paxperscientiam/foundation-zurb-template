@@ -98,7 +98,7 @@ function sass() {
 function javascript() {
   return gulp.src(PATHS.javascript)
     .pipe($.sourcemaps.init())
-    .pipe($.babel())
+    .pipe($.babel({ignore: ['what-input.js']}))
     .pipe($.concat('app.js'))
     .pipe($.if(PRODUCTION, $.uglify()
       .on('error', e => { console.log(e); })
@@ -137,7 +137,7 @@ function watch() {
   gulp.watch(PATHS.assets, copy);
   gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, browser.reload));
   gulp.watch('src/{layouts,partials}/**/*.html').on('all', gulp.series(resetPages, pages, browser.reload));
-  gulp.watch('src/assets/scss/**/*.scss').on('all', gulp.series(sass, browser.reload));
+  gulp.watch('src/assets/scss/**/*.scss').on('all', sass);
   gulp.watch('src/assets/js/**/*.js').on('all', gulp.series(javascript, browser.reload));
   gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
   gulp.watch('src/styleguide/**').on('all', gulp.series(styleGuide, browser.reload));
